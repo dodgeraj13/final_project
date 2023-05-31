@@ -167,6 +167,8 @@ class Calender {
 
   removeEvent(date, button, button1, button2) {
 
+    this.deleteButtons();
+
     this.events[date - 1] = undefined;
     this.eventsLabels[date-1] = undefined;
     document.body.removeChild(button1);
@@ -258,13 +260,11 @@ class Calender {
     
     try{if (tester.events[number - 1] != undefined) {
       const button2 = document.createElement("button");
-      button2.innerText = "Events: " + tester.events[number - 1];
+      button2.innerText = "Event: " + tester.events[number - 1];
       button2.id = "mainButton";
       button2.style.height = "50px";
       button2.style.width = "150px";
-      button2.addEventListener("click", () =>
-        document.body.removeChild(button2)
-      );
+      
       document.body.appendChild(button2);
 
       const button3 = document.createElement("button");
@@ -272,6 +272,11 @@ class Calender {
       button3.id = "mainButton";
       button3.style.height = "50px";
       button3.style.width = "100px";
+
+      button2.addEventListener("click", () =>
+        this.deleteThese(button2,button3)
+      );
+
       button3.addEventListener("click", () =>
         tester.removeEvent(number, button, button2, button3)
       );
@@ -283,6 +288,12 @@ class Calender {
   {
     console.log('Plz work annoying 2');
   }
+  }
+
+  deleteThese(button1,button2)
+  {
+    document.body.removeChild(button1);
+    document.body.removeChild(button2);
   }
   // creates label buttons for user to choose from when creating event
   labelButtons(date, button) {
@@ -516,9 +527,11 @@ tester.setEverything(testMe,testMe2);
 tester.printEverything();
 
 window.onbeforeunload = function(){
+
+  tester.deleteButtons();
   localStorage.setItem('tester',JSON.stringify(tester.events));
   localStorage.setItem('tester2',JSON.stringify(tester.eventsLabels));
-  this.deleteButtons();
+  
 }
 
 
