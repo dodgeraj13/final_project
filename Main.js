@@ -38,11 +38,11 @@ function arrayMe(rows) {
 
 const button22 = document.createElement("button");
 
-    button22.innerText = 'clear';
-    button22.id = 'clear';
-    button22.style.height = "1px";
-    button22.style.width = "1px";
-    document.body.appendChild(button22);
+button22.innerText = "clear";
+button22.id = "clear";
+button22.style.height = "1px";
+button22.style.width = "1px";
+document.body.appendChild(button22);
 
 class Calender {
   constructor(monthIn, dateIn) {
@@ -56,22 +56,15 @@ class Calender {
     this.events = new Array(this.days); // array for events
     this.eventsLabels = new Array(this.days); // array for events labels (blue,red,green)
     this.arrayB; // array of buttons?
-    
-    for(let i = 0; i < this.eventsLabels.length; i++)
-      {
-        this.eventsLabels[i] = 'white';
-      }
-    
-    for(let i = 0; i < this.events.length; i++)
-      {
-        this.events[i] = 'blank';
-      }
-    
-    
-    
-    
 
-    
+    for (let i = 0; i < this.eventsLabels.length; i++) {
+      this.eventsLabels[i] = "white";
+    }
+
+    for (let i = 0; i < this.events.length; i++) {
+      this.events[i] = "blank";
+    }
+
     for (let i = 0; i <= 6; i++) {
       this.cal[1][i] = daysOfWeek[this.counter];
       this.counter++;
@@ -100,28 +93,24 @@ class Calender {
     }
   }
 
-  setEverything(eventsIn,eventsLabelsIn)
-  {
-    
-    for(let i = 0; i < this.events.length; i++)
-  {
-    this.events[i] = eventsIn[i];
-    if(this.events[i] == undefined || this.events[i] == null)
-      {
-        this.events[i] = 'blank';
+  setEverything(eventsIn, eventsLabelsIn) {
+    for (let i = 0; i < this.events.length; i++) {
+      try {
+        this.events[i] = eventsIn[i];
+      } catch (err) {
+        this.events[i] = "blank";
       }
-    
-    this.eventsLabels[i] = eventsLabelsIn[i];
-    if(this.eventsLabels[i] == undefined || this.eventsLabels[i] == null)
-      {
-      this.eventsLabels[i] = 'white';
+
+      try {
+        this.eventsLabels[i] = eventsLabelsIn[i];
+      } catch (err) {
+        this.eventsLabels[i] = "white";
       }
-  }
+    }
 
     this.deleteButtons();
 
     this.printEverything();
-    
   }
 
   // for console/debugging purposes
@@ -184,30 +173,28 @@ class Calender {
   */
 
   saveEvent(date, box, button, button2) {
-    try{
+    try {
       this.events[date - 1] = box.value;
-    } catch(err)
-      {
-      console.log('broke');
-      }
+    } catch (err) {
+      console.log("broke");
+    }
     document.body.removeChild(box);
     document.body.removeChild(button2);
     this.labelButtons(date, button);
   }
 
   removeEvent(date, button, button1, button2) {
-
     this.deleteButtons();
 
-    this.events[date - 1] = 'blank';
-    this.eventsLabels[date-1] = 'white';
+    this.events[date - 1] = "blank";
+    this.eventsLabels[date - 1] = "white";
     document.body.removeChild(button1);
     document.body.removeChild(button2);
     button.style.backgroundColor = "white";
-   
+
     this.deleteButtons();
     this.printEvents();
-    
+
     const d = new Date();
     const today = d.getDate();
 
@@ -216,11 +203,10 @@ class Calender {
     } else if (date == today) {
       button.style.backgroundColor = "cyan";
     }
-
   }
 
   chooseLabel(date, color, button, redB, blueB, greenB) {
-    this.eventsLabels[date - 1] = 'white';
+    this.eventsLabels[date - 1] = "white";
     this.eventsLabels[date - 1] = color;
     document.body.removeChild(redB);
     document.body.removeChild(blueB);
@@ -269,49 +255,42 @@ class Calender {
 
     button.addEventListener("click", () => this.decider(number, button));
 
-    let color = 'white';
-        try{
-          color = this.eventsLabels[number - 1];
-           }catch(err)
-             {
-              color = 'white';
-             }
-      if (number == today) {
-        button.style.backgroundColor = "cyan";
-      } else if(number < today) {
-        button.style.backgroundColor = "orange";
-      }
-    
-      if (color != 'white')
-      {
-        button.style.backgroundColor = this.eventsLabels[number-1];
-      } 
-      
- 
-    
-  
-  document.body.appendChild(button);
-}
+    let color = "white";
+    try {
+      color = this.eventsLabels[number - 1];
+    } catch (err) {
+      color = "white";
+    }
+    if (number == today) {
+      button.style.backgroundColor = "cyan";
+    } else if (number < today) {
+      button.style.backgroundColor = "orange";
+    }
+
+    if (color != "white") {
+      button.style.backgroundColor = this.eventsLabels[number - 1];
+    }
+
+    document.body.appendChild(button);
+  }
 
   //lets user decide what to do when clicking on day with an event
   decider(number, button) {
-    
-  let event = 'blank';
-    
-   try{
-     event = this.events[number - 1];
-     console.log(this.events[number-1]);
-   } catch(err)
-     {
-       event = 'blank';
-     }
-   if (event != 'blank') {
+    let event = "blank";
+
+    try {
+      event = this.events[number - 1];
+      console.log(this.events[number - 1]);
+    } catch (err) {
+      event = "blank";
+    }
+    if (event != "blank") {
       const button2 = document.createElement("button");
       button2.innerText = "Event: " + tester.events[number - 1];
       button2.id = "mainButton";
       button2.style.height = "50px";
       button2.style.width = "150px";
-      
+
       document.body.appendChild(button2);
 
       const button3 = document.createElement("button");
@@ -321,7 +300,7 @@ class Calender {
       button3.style.width = "100px";
 
       button2.addEventListener("click", () =>
-        this.deleteThese(button2,button3)
+        this.deleteThese(button2, button3)
       );
 
       button3.addEventListener("click", () =>
@@ -330,14 +309,10 @@ class Calender {
       document.body.appendChild(button3);
     } else {
       this.textBoxCreator(number, button);
-    
-    
     }
   }
-  
 
-  deleteThese(button1,button2)
-  {
+  deleteThese(button1, button2) {
     document.body.removeChild(button1);
     document.body.removeChild(button2);
   }
@@ -393,82 +368,65 @@ class Calender {
   }
 
   //doesn't create buttons, but used for events on right side (unclickable)
-  buttonCreator3(event,topIn,move,day) {
-
+  buttonCreator3(event, topIn, move, day) {
     const button = document.createElement("button2");
 
     button.innerText = event;
     button.id = "apples";
 
-
-    if(move == 1)
-    {
-      button.style.left = '900px';
-    } else if(move == 2)
-    {
-      button.style.left = '700px';
+    if (move == 1) {
+      button.style.left = "900px";
+    } else if (move == 2) {
+      button.style.left = "700px";
     }
 
-    button.style.top = ((topIn * 50) + 80) + 'px';
+    button.style.top = topIn * 50 + 80 + "px";
 
     button.style.background = this.eventsLabels[day];
-  
+
     document.body.appendChild(button);
   }
 
-  deleteButtons()
-  {
-    
-      let buttons = document.getElementsByTagName("button2");
+  deleteButtons() {
+    let buttons = document.getElementsByTagName("button2");
 
-    try{
-      for(let i = 0; i <= buttons.length; i++)
-    {
-      buttons[i].remove();
-    }
-  } catch(err)
-  {
-
-  }
+    try {
+      for (let i = 0; i <= buttons.length; i++) {
+        buttons[i].remove();
+      }
+    } catch (err) {}
   }
 
-  buttonCreator3second(event,move) {
-
+  buttonCreator3second(event, move) {
     const button = document.createElement("button2");
 
     button.innerText = event;
     button.id = "mainButton";
 
-    
-    button.style.left = move + 'px';
-    
+    button.style.left = move + "px";
 
-    button.style.top = (20) + 'px';
+    button.style.top = 20 + "px";
 
-    button.style.background = 'lavender';
-    
+    button.style.background = "lavender";
+
     document.body.appendChild(button);
-    
   }
 
   buttonCreator4() {
-
     const button = document.createElement("button");
 
-    button.innerText = 'Clear Events';
+    button.innerText = "Clear Events";
 
     button.id = "mainButton";
 
     button.style.height = "50px";
     button.style.width = "60px";
-    
 
     button.addEventListener("click", () => this.clearEvents());
 
     document.body.appendChild(button);
-    
   }
-    
+
   //highlights date selected and creates textbook for user to type into, then sends info to events
   textBoxCreator(number, buttons) {
     buttons.style.backgroundColor = "yellow";
@@ -490,7 +448,6 @@ class Calender {
   }
 
   printEvents() {
-    
     const a = new Date();
     let dayA = a.getDate();
 
@@ -499,54 +456,59 @@ class Calender {
     let counter3 = 0;
 
     this.deleteButtons();
-    
+
     let printMe = new Array(0);
     let printI = new Array(0);
 
     for (let i = 0; i < this.days; i++) {
-    
       try {
-        if (this.events[i] != 'blank')
-        {
+        if (this.events[i] != "blank") {
           printMe.push(this.events[i]);
-        printI.push(i);
+          printI.push(i);
+        }
+      } catch (err) {
+        console.log("i hate this");
       }
-    }catch(err)
-    {
-      console.log('i hate this');
     }
 
-    }
-
-    this.buttonCreator3second('Current', 500);
-    this.buttonCreator3second('Future', 700);
-    this.buttonCreator3second('Past', 900);
+    this.buttonCreator3second("Current", 500);
+    this.buttonCreator3second("Future", 700);
+    this.buttonCreator3second("Past", 900);
 
     for (let i = 0; i < printMe.length; i++) {
       let move = 0;
 
-      if(printI[i] < dayA-1)
-      {
-      move = 1;
-      this.buttonCreator3((printI[i]+1) + ': ' + printMe[i],counter1,move,printI[i]);
-      counter1++;
-      } else if(printI[i] > dayA-1)
-      {
+      if (printI[i] < dayA - 1) {
+        move = 1;
+        this.buttonCreator3(
+          printI[i] + 1 + ": " + printMe[i],
+          counter1,
+          move,
+          printI[i]
+        );
+        counter1++;
+      } else if (printI[i] > dayA - 1) {
         move = 2;
-        this.buttonCreator3((printI[i]+1) + ': ' + printMe[i],counter2,move,printI[i]);
+        this.buttonCreator3(
+          printI[i] + 1 + ": " + printMe[i],
+          counter2,
+          move,
+          printI[i]
+        );
         counter2++;
-      }else
-      {
-        this.buttonCreator3((printI[i]+1) + ': ' + printMe[i],counter3,move,printI[i]);
+      } else {
+        this.buttonCreator3(
+          printI[i] + 1 + ": " + printMe[i],
+          counter3,
+          move,
+          printI[i]
+        );
         counter3++;
       }
-     
-
     }
   }
 
   printEverything() {
-    
     this.printMonth();
     this.printDays();
     this.printCal();
@@ -564,42 +526,32 @@ let startDay = findStartDay(dayA, dayB);
 
 const tester = new Calender(month, startDay); // (month[1-12],startDay[0=Sunday])
 
-const testMe = JSON.parse(localStorage.getItem('tester'));
-const testMe2 = JSON.parse(localStorage.getItem('tester2'));
+const testMe = JSON.parse(localStorage.getItem("tester"));
+const testMe2 = JSON.parse(localStorage.getItem("tester2"));
 
+try {
+  for (let i = 0; i < testMe.length; i++) {
+    if (testMe[i] == undefined || testMe[i] == null) {
+      testMe[i] = "blank";
+    }
 
-try{
-  for(let i = 0; i < testMe.length; i++)
-  {
-    if(testMe[i] == undefined || testMe[i] == null)
-      {
-      testMe[i] = 'blank';
-      }
-    
-    
-    if(testMe2[i] == undefined || testMe2[i] == null)
-      {
-      testMe2[i] = 'white';
-      }
+    if (testMe2[i] == undefined || testMe2[i] == null) {
+      testMe2[i] = "white";
+    }
   }
-} catch(err)
-  {
-    console.log('first time');
-  }
+} catch (err) {
+  console.log("first time");
+}
 
-tester.setEverything(testMe,testMe2);
+tester.setEverything(testMe, testMe2);
 
 //tester.markCal();
 //console.log(tester.showCal());
 
 tester.printEverything();
 
-window.onbeforeunload = function(){
-
+window.onbeforeunload = function () {
   tester.deleteButtons();
-  localStorage.setItem('tester',JSON.stringify(tester.events));
-  localStorage.setItem('tester2',JSON.stringify(tester.eventsLabels));
-  
-}
-
-
+  localStorage.setItem("tester", JSON.stringify(tester.events));
+  localStorage.setItem("tester2", JSON.stringify(tester.eventsLabels));
+};
