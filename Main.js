@@ -104,6 +104,20 @@ class Calender {
   {
     this.events = events;
     this.eventsLabels = eventLabels;
+    
+    for(let i = 0; i < this.events.length; i++)
+  {
+    if(this.events[i] == undefined || this.events[i] == null)
+      {
+      this.events[i] = 'blank';
+      }
+    
+    
+    if(this.eventsLabels[i] == undefined || this.eventsLabels[i] == null)
+      {
+      this.eventsLabels[i] = 'white';
+      }
+  }
 
     this.deleteButtons();
 
@@ -207,6 +221,7 @@ class Calender {
   }
 
   chooseLabel(date, color, button, redB, blueB, greenB) {
+    this.eventsLabels[date - 1] = 'white';
     this.eventsLabels[date - 1] = color;
     document.body.removeChild(redB);
     document.body.removeChild(blueB);
