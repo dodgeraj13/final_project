@@ -100,19 +100,18 @@ class Calender {
     }
   }
 
-  setEverything(events,eventLabels)
+  setEverything(eventsIn,eventsLabelsIn)
   {
-    this.events = events;
-    this.eventsLabels = eventLabels;
     
     for(let i = 0; i < this.events.length; i++)
   {
+    this.events[i] = eventsIn[i];
     if(this.events[i] == undefined || this.events[i] == null)
       {
-      this.events[i] = 'blank';
+        this.events[i] = 'blank';
       }
     
-    
+    this.eventsLabels[i] = eventsLabelsIn[i];
     if(this.eventsLabels[i] == undefined || this.eventsLabels[i] == null)
       {
       this.eventsLabels[i] = 'white';
