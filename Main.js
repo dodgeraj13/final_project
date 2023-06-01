@@ -59,7 +59,7 @@ class Calender {
     
     for(let i = 0; i < this.eventsLabels.length; i++)
       {
-        this.eventsLabels[i] = 'blank';
+        this.eventsLabels[i] = 'white';
       }
     
     
