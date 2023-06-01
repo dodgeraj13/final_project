@@ -62,6 +62,11 @@ class Calender {
         this.eventsLabels[i] = 'white';
       }
     
+    for(let i = 0; i < this.events.length; i++)
+      {
+        this.events[i] = 'blank';
+      }
+    
     
     
     
@@ -549,7 +554,9 @@ const tester = new Calender(month, startDay); // (month[1-12],startDay[0=Sunday]
 const testMe = JSON.parse(localStorage.getItem('tester'));
 const testMe2 = JSON.parse(localStorage.getItem('tester2'));
 
-for(let i = 0; i < testMe.length; i++)
+
+try{
+  for(let i = 0; i < testMe.length; i++)
   {
     if(testMe[i] == undefined || testMe[i] == null)
       {
@@ -561,6 +568,10 @@ for(let i = 0; i < testMe.length; i++)
       {
       testMe2[i] = 'white';
       }
+  }
+} catch(err)
+  {
+    console.log('first time');
   }
 
 tester.setEverything(testMe,testMe2);
