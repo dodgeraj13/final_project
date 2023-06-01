@@ -57,6 +57,13 @@ class Calender {
     this.eventsLabels = new Array(this.days); // array for events labels (blue,red,green)
     this.arrayB; // array of buttons?
     
+    for(let i = 0; i < this.eventsLabels.length; i++)
+      {
+        this.eventsLabels[i] = 'blank';
+      }
+    
+    
+    
     
 
     
@@ -159,7 +166,12 @@ class Calender {
   */
 
   saveEvent(date, box, button, button2) {
-    this.events[date - 1] = box.value;
+    try{
+      this.events[date - 1] = box.value;
+    } catch(err)
+      {
+      console.log('broke');
+      }
     document.body.removeChild(box);
     document.body.removeChild(button2);
     this.labelButtons(date, button);
@@ -169,8 +181,8 @@ class Calender {
 
     this.deleteButtons();
 
-    this.events[date - 1] = undefined;
-    this.eventsLabels[date-1] = undefined;
+    this.events[date - 1] = 'blank';
+    this.eventsLabels[date-1] = 'white';
     document.body.removeChild(button1);
     document.body.removeChild(button2);
     button.style.backgroundColor = "white";
@@ -238,18 +250,25 @@ class Calender {
 
     button.addEventListener("click", () => this.decider(number, button));
 
-    try{
+    let color = 'white';
+        try{
+          color = this.eventsLabels[number - 1];
+           }catch(err)
+             {
+              color = 'white';
+             }
       if (number == today) {
         button.style.backgroundColor = "cyan";
-      } else if (this.eventsLabels[number-1] != null)
-      {
-        button.style.backgroundColor = this.eventsLabels[number-1];
-      } else if (number < today) {
+      } else if(number < today) {
         button.style.backgroundColor = "orange";
       }
-    } catch(err) {
-      console.log('annoying plz work');
-    } 
+    
+      if (color != 'white')
+      {
+        button.style.backgroundColor = this.eventsLabels[number-1];
+      } 
+      
+ 
     
   
   document.body.appendChild(button);
@@ -258,7 +277,17 @@ class Calender {
   //lets user decide what to do when clicking on day with an event
   decider(number, button) {
     
-    try{if (tester.events[number - 1] != undefined) {
+  let event = 'blank';
+    
+   try{
+     event = this.events[number - 1];
+     console.log(this.events[number-1]);
+   } catch(err)
+     {
+       event = 'blank';
+       console.log(this.events.length);
+     }
+   if (event != 'blank') {
       const button2 = document.createElement("button");
       button2.innerText = "Event: " + tester.events[number - 1];
       button2.id = "mainButton";
@@ -283,12 +312,11 @@ class Calender {
       document.body.appendChild(button3);
     } else {
       this.textBoxCreator(number, button);
+    
+    
     }
-  } catch(err)
-  {
-    console.log('Plz work annoying 2');
   }
-  }
+  
 
   deleteThese(button1,button2)
   {
@@ -433,13 +461,13 @@ class Calender {
     const button = document.createElement("button");
     button.innerText = "Enter";
     button.id = "mainButton";
-    button.style.height = "30";
+    button.style.height = "30px";
     button.style.width = "50px";
     button.style.backgroundColor = "grey";
     document.body.appendChild(button);
 
     button.addEventListener("click", () => {
-      tester.saveEvent(number, box, buttons, button);
+      this.saveEvent(number, box, buttons, button);
     });
   }
 
@@ -459,8 +487,10 @@ class Calender {
 
     for (let i = 0; i < this.days; i++) {
     
-      try{if (this.events[i] != undefined) {
-        printMe.push(this.events[i]);
+      try {
+        if (this.events[i] != 'blank')
+        {
+          printMe.push(this.events[i]);
         printI.push(i);
       }
     }catch(err)
@@ -519,6 +549,20 @@ const tester = new Calender(month, startDay); // (month[1-12],startDay[0=Sunday]
 const testMe = JSON.parse(localStorage.getItem('tester'));
 const testMe2 = JSON.parse(localStorage.getItem('tester2'));
 
+for(let i = 0; i < testMe.length; i++)
+  {
+    if(testMe[i] == undefined || testMe[i] == null)
+      {
+      testMe[i] = 'blank';
+      }
+    
+    
+    if(testMe2[i] == undefined || testMe2[i] == null)
+      {
+      testMe2[i] = 'white';
+      }
+  }
+
 tester.setEverything(testMe,testMe2);
 
 //tester.markCal();
@@ -533,6 +577,5 @@ window.onbeforeunload = function(){
   localStorage.setItem('tester2',JSON.stringify(tester.eventsLabels));
   
 }
-
 
 
