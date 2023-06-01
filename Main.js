@@ -290,7 +290,6 @@ class Calender {
    } catch(err)
      {
        event = 'blank';
-       console.log(this.events.length);
      }
    if (event != 'blank') {
       const button2 = document.createElement("button");
